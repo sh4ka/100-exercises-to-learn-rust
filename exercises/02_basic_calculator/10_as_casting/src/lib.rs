@@ -10,6 +10,7 @@ mod tests {
         assert_eq!(47u16 as u32, v);
     }
 
+    //noinspection RsLiteralOutOfRange
     #[test]
     fn u8_to_i8() {
         // The compiler is smart enough to know that the value 255 cannot fit
