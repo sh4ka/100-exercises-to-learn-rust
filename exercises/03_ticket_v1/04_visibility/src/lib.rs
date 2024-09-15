@@ -1,4 +1,4 @@
-mod ticket {
+pub mod ticket {
     pub struct Ticket {
         title: String,
         description: String,
@@ -36,10 +36,6 @@ mod ticket {
 //  in this exercise.
 #[cfg(test)]
 mod tests {
-    // TODO: Add the necessary `pub` modifiers in the parent module to remove the compiler
-    //  errors about the use statement below.
-    use super::ticket::Ticket;
-
     // Be careful though! We don't want this function to compile after you have changed
     // visibility to make the use statement compile!
     // Once you have verified that it indeed doesn't compile, comment it out.
