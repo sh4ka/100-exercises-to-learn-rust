@@ -5,3 +5,5 @@ edition = "2021"
 
 [dev-dependencies]
 common = { path = "../../../helpers/common" }
+[dependencies]
+log = "0.4.22"

@@ -11,19 +11,19 @@ pub struct Ticket {
 
 impl Ticket {
     pub fn new(title: String, description: String, status: String) -> Ticket {
-        if title.is_empty() {
+        if !Self::valid_title_content(&title) {
             panic!("Title cannot be empty");
         }
-        if title.len() > 50 {
+        if !Self::valid_title_length(&title) {
             panic!("Title cannot be longer than 50 bytes");
         }
-        if description.is_empty() {
+        if !Self::valid_description_content(&description) {
             panic!("Description cannot be empty");
         }
-        if description.len() > 500 {
+        if !Self::valid_description_length(&description) {
             panic!("Description cannot be longer than 500 bytes");
         }
-        if status != "To-Do" && status != "In Progress" && status != "Done" {
+        if !Self::valid_status(&status) {
             panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
         }
 
@@ -44,6 +44,51 @@ impl Ticket {
 
     pub fn status(&self) -> &String {
         &self.status
+    }
+
+    pub fn set_title(&mut self, new_title: String) {
+        if !Self::valid_title_content(&new_title) {
+            panic!("Title cannot be empty");
+        }
+        if !Self::valid_title_length(&new_title) {
+            panic!("Title cannot be longer than 50 bytes");
+        }
+        self.title = new_title
+    }
+    pub fn set_description(&mut self, new_description: String) {
+        if !Self::valid_description_content(&new_description) {
+            panic!("Description cannot be empty");
+        }
+        if !Self::valid_description_length(&new_description) {
+            panic!("Description cannot be longer than 500 bytes");
+        }
+        self.description = new_description
+    }
+    pub fn set_status(&mut self, new_status: String) {
+        if !Self::valid_status(&new_status) {
+            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
+        }
+        self.status = new_status
+    }
+
+    fn valid_title_content(title: &String) -> bool {
+        !title.is_empty()
+    }
+
+    pub fn valid_description_content(description: &String) -> bool {
+        !description.is_empty()
+    }
+
+    pub fn valid_description_length(description: &String) -> bool {
+        description.len() <= 500
+    }
+
+    fn valid_title_length(title: &String) -> bool {
+        title.len() <= 50
+    }
+
+    fn valid_status(status: &String) -> bool {
+        status == "To-Do" || status == "In Progress" || status == "Done"
     }
 }
 

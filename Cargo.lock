@@ -1946,6 +1946,7 @@ name = "setters"
 version = "0.1.0"
 dependencies = [
  "common",
+ "log",
 ]
 
 [[package]]
