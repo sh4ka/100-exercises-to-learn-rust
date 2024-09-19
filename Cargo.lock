@@ -205,6 +205,7 @@ dependencies = [
 name = "bounded"
 version = "0.1.0"
 dependencies = [
+ "thiserror",
  "ticket_fields",
 ]
 
