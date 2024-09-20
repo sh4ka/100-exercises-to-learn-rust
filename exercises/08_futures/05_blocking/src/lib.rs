@@ -4,15 +4,19 @@
 //  Use `spawn_blocking` inside `echo` to resolve the issue.
 use std::io::{Read, Write};
 use tokio::net::TcpListener;
+use tokio::task::spawn_blocking;
 
 pub async fn echo(listener: TcpListener) -> Result<(), anyhow::Error> {
     loop {
         let (socket, _) = listener.accept().await?;
         let mut socket = socket.into_std()?;
-        socket.set_nonblocking(false)?;
-        let mut buffer = Vec::new();
-        socket.read_to_end(&mut buffer)?;
-        socket.write_all(&buffer)?;
+        spawn_blocking(move || -> Result<(), anyhow::Error> {
+            socket.set_nonblocking(false)?;
+            let mut buffer = Vec::new();
+            socket.read_to_end(&mut buffer)?;
+            socket.write_all(&buffer)?;
+            Ok(())
+        });
     }
 }
 
@@ -25,7 +29,7 @@ mod tests {
     use tokio::task::JoinSet;
 
     async fn bind_random() -> (TcpListener, SocketAddr) {
-        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap(); 
         let addr = listener.local_addr().unwrap();
         (listener, addr)
     }

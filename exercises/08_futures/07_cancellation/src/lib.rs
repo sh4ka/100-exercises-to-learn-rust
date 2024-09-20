@@ -11,7 +11,7 @@ pub async fn run(listener: TcpListener, n_messages: usize, timeout: Duration) ->
         let _ = tokio::time::timeout(timeout, async {
             stream.read_to_end(&mut buffer).await.unwrap();
         })
-        .await;
+            .await;
     }
     buffer
 }
@@ -46,6 +46,6 @@ mod tests {
 
         let buffered = handle.await.unwrap();
         let buffered = std::str::from_utf8(&buffered).unwrap();
-        assert_eq!(buffered, "");
+        assert_eq!(buffered, "hefrthta");
     }
 }
